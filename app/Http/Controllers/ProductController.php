@@ -38,18 +38,11 @@ class ProductController extends Controller
 
         if($request->hasFile('image')){
             $file = $request->file('image');
-            $extension = $file->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
-            $path = 'uploads/';
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $path = 'uploads/images/';
             $file->move($path, $filename);
-            $request['image'] = $filename;
 
-        }else{
-            return $request;
-            $request['image'] = '';
         }
-        
-        
 
         Product::create([
             
@@ -71,7 +64,9 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::find($id);
+        return view('products.show' , compact('product'));
+        
     }
 
     /**

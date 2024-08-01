@@ -10,7 +10,7 @@
 <body>
     <div class="contenner ">
         <h1 class="m-4">Products</h1>
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
            <thead>
             <tr>
                 <td>Id</td>
@@ -30,10 +30,11 @@
                     <td>{{$product->quantity}}</td>
                     <td>{{$product->price}}</td>
                     <td>{{$product->description}}</td>
-                    <td><img src="{{asset($product->image)}}" alt="Product Image" style="width: 40px; height: 40px;"></td>
+                    <td><img src="{{asset($product->image)}}" alt="Product Image" style="width: 50px; height: 50px;"></td>
                     <td>
+                        <a href="{{route('products.show', $product->id)}}">View</a>
                         <a href="#">Edit</a>
-                        <a href="#">show</a>
+                        
                         <a href="#">Delete</a>
                     </td>
                 </tr>
