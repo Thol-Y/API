@@ -28,14 +28,19 @@
                     <td>{{$product->id}}</td>
                     <td>{{$product->name}}</td>
                     <td>{{$product->quantity}}</td>
-                    <td>{{$product->price}}</td>
+                    <td>${{$product->price}}</td>
                     <td>{{$product->description}}</td>
                     <td><img src="{{asset($product->image)}}" alt="Product Image" style="width: 50px; height: 50px;"></td>
                     <td>
-                        <a href="{{route('products.show', $product->id)}}">View</a>
-                        <a href="#">Edit</a>
+                        <a class="btn btn-info" href="{{route('products.show', $product->id)}}">View</a>
+                        <a class="btn btn-warning" href="{{route('products.edit', $product->id)}}">Edit</a>
                         
-                        <a href="#">Delete</a>
+                        <form action="{{route('products.destroy', $product->id)}}" method="post" style="display: inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                        
                     </td>
                 </tr>
             @endforeach

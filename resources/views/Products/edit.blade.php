@@ -9,9 +9,10 @@
 </head>
 <body>
     <div class="contenner">
-        <h1 class="p-4"> Add Your Products</h1>
-        <form action="{{route('products.create')}}" method="post" enctype="multipart/form-data">
+        <h1 class="p-4">Product Update</h1>
+        <form action="{{route('products.update', $product->id)}}" method="post" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -25,22 +26,22 @@
             <div class="d-flex justify-content-center">
             <div class="card w-75 mb-3 p-3" style="width: 18rem; ">
                 <label for="name"><strong>Name</strong></label>
-                <input type="text" name="name" id="name" class="form-control" placeholder="Enter Product Name">
+                <input type="text" name="name" id="name" class="form-control" placeholder="Enter Product Name" value="{{$product->name}}">
 
                 <label for="quantity"><strong>Quantity</strong></label>
-                <input type="text" name="quantity" id="quantity" class="form-control" placeholder="Enter Product Quantity">
+                <input type="text" name="quantity" id="quantity" class="form-control" placeholder="Enter Product Quantity" value="{{$product->quantity}}">
 
                 <label for="price"><Strong>Price</Strong></label>
-                <input type="text" name="price" id="price" class="form-control" placeholder="Enter Product Price">
+                <input type="text" name="price" id="price" class="form-control" placeholder="Enter Product Price" value="{{$product->price}}">
 
                 <label for="description"><strong>Discription</strong></label>
-                <textarea name="description" id="description" class="form-control" placeholder="Enter Product Description"></textarea>
+                <textarea name="description" id="description" class="form-control" placeholder="Enter Product Description"> {{$product->description}}</textarea>
 
                 <label for="image"><strong>Image</strong></label>
                 <input type="file" name="image" id="image" class="form-control" placeholder="Enter Product Image">
                 <div class="card-body">
                   <a href="{{route('products.index')}}" class="btn btn-dark">Back</a>
-                  <button class="btn btn-success" type="submit">Add Product</button>
+                  <button class="btn btn-success" type="submit">Update Product</button>
                 </div>
               </div>
             </div>

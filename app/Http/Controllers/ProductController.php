@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\File;
+
 class ProductController extends Controller
 {
     /**
@@ -74,15 +76,45 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::find($id);
+        return view('products.edit' , compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request , string $id)
     {
-        //
+        $request -> validate([
+            'name' => 'required',
+            'quantity' => 'required',
+            'price' => 'required',
+            'description' => 'required',
+            'image' => 'required',
+        ]);
+        $product = Product::find($id);
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $path = 'uploads/images/';
+            $file->move($path, $filename);
+
+            if(File::exists($product->image)){
+                File::delete($product->image);
+            }
+        }
+
+        $product->update([
+            
+            'name' => $request['name'],
+            'quantity' => $request['quantity'],
+            'price' => $request['price'],
+            'description' => $request['description'],
+            'image' => $path . $filename,
+
+        ]);
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -90,6 +122,11 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+        if(File::exists($product->image)){
+            File::delete($product->image);
+        }
+        $product->delete();
+        return redirect()->route('products.index');
     }
 }
